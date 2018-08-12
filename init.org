@@ -254,7 +254,7 @@
    Install Helm and set some keybindings. Note that I use =helm-occur= to search current buffer. (Note: here I =require= helm before using =use-package= to get rid of the warning =functions might not be defined at runtime=.
 
    #+BEGIN_SRC emacs-lisp
-   (require 'helm)
+   ;; (require 'helm)
    (use-package helm
      :ensure t
      :config
@@ -273,7 +273,7 @@
    Install Projectile.
 
    #+BEGIN_SRC emacs-lisp
-   (require 'projectile)
+   ;; (require 'projectile)
    (use-package projectile
      :ensure t
      :config
@@ -285,7 +285,7 @@
    And make Helm play nice with Projectile.
 
    #+BEGIN_SRC emacs-lisp
-   (require 'helm-projectile)
+   ;; (require 'helm-projectile)
    (use-package helm-projectile
      :ensure t
      :config
@@ -324,7 +324,7 @@
    Emacs port of GitGutter
 
    #+BEGIN_SRC emacs-lisp
-   (require 'git-gutter)
+   ;; (require 'git-gutter)
    (use-package git-gutter
      :ensure t
      :config
@@ -343,7 +343,7 @@
    Beacon is a light that follows your cursor around so you don't lose it!
 
    #+BEGIN_SRC emacs-lisp
-   (require 'beacon)
+   ;; (require 'beacon)
    (use-package beacon
      :ensure t
      :config
@@ -353,7 +353,7 @@
    Which key is great for learning Emacs, it shows a nice table of possible commands.
 
    #+BEGIN_SRC emacs-lisp
-   (require 'which-key)
+   ;; (require 'which-key)
    (use-package which-key
      :ensure t
      :config
@@ -370,7 +370,7 @@
    Company autocompletion
 
    #+BEGIN_SRC emacs-lisp
-   (require 'company)
+   ;; (require 'company)
    (use-package company
      :ensure t
      :config
@@ -393,7 +393,7 @@
    Syntax checking
 
    #+BEGIN_SRC emacs-lisp
-   (require 'flycheck)
+   ;; (require 'flycheck)
    (use-package flycheck
      :ensure t
      :init (global-flycheck-mode))
@@ -582,7 +582,7 @@
   Org-bullets are just nice.
 
   #+BEGIN_SRC emacs-lisp
-  (require 'org-bullets)
+  ;; (require 'org-bullets)
   (use-package org-bullets
     :ensure t
     :config
