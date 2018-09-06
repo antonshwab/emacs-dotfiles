@@ -93,8 +93,10 @@ I keep my links in =links.org=, export them to HTML and access them via browser.
 I'm trying out Inconsolata as my code font. Also, remove the cruft and make the initial size bigger.
 
 #+BEGIN_SRC emacs-lisp
-;; (set-frame-font "Inconsolata LGC 12")
-(set-frame-font "IBM Plex Mono 12")
+(when (member "IBM Plex Mono" (font-family-list))
+  (set-frame-font "IBM Plex Mono 12" t t)
+)
+
 (load-theme 'tsdh-light)
 (setq initial-frame-alist '((width . 202) (height . 47)))
 (tool-bar-mode -1)
