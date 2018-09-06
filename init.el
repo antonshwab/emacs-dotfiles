@@ -94,7 +94,7 @@
   :config
   (nyan-mode))
 
-(require 'exec-path-from-shell)
+;; (require 'exec-path-from-shell)
 (use-package exec-path-from-shell
   :ensure t
   ;; :commands exec-path-from-shell-initialize
@@ -102,7 +102,7 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(require 'expand-region)
+;; (require 'expand-region)
 (use-package expand-region
   :ensure t
   :config
@@ -110,7 +110,7 @@
   (global-set-key (kbd "s-(") 'er/contract-region)
   )
 
-(require 'helm)
+;; (require 'helm)
 (use-package helm
   :ensure t
   :config
@@ -125,7 +125,7 @@
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "s-f") 'helm-occur))
 
-(require 'projectile)
+;; (require 'projectile)
 (use-package projectile
   :ensure t
   :config
@@ -133,19 +133,19 @@
   (projectile-mode +1)
   )
 
-(require 'helm-projectile)
+;; (require 'helm-projectile)
 (use-package helm-projectile
   :ensure t
   :config
   (helm-projectile-on))
 
-(require 'helm-ag)
+;; (require 'helm-ag)
 (use-package helm-ag
   :ensure t
   :config
   (global-set-key (kbd "s-F") 'helm-projectile-ag))
 
-(require 'simpleclip)
+;; (require 'simpleclip)
 (use-package simpleclip
   :ensure t
   :commands
@@ -153,13 +153,13 @@
   :config
   (simpleclip-mode 1))
 
-(require 'magit)
+;; (require 'magit)
 (use-package magit
   :ensure t
   :config
   (global-set-key (kbd "s-m") 'magit-status))
 
-(require 'git-gutter)
+;; (require 'git-gutter)
 (use-package git-gutter
   :ensure t
   :config
@@ -180,7 +180,7 @@
 ;;   :config
 ;;   (beacon-mode 1))
 
-(require 'which-key)
+;; (require 'which-key)
 (use-package which-key
   :ensure t
   :config
@@ -189,7 +189,7 @@
 
 (setq ispell-program-name "aspell")
 
-(require 'company)
+;; (require 'company)
 (use-package company
   :ensure t
   :config
@@ -207,27 +207,27 @@
 (use-package helm-company
   :ensure t)
 
-(require 'flycheck)
+;; (require 'flycheck)
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enable)))
 
-(require 'terraform-mode)
+;; (require 'terraform-mode)
 (use-package terraform-mode
   :ensure t)
 
-(require 'alchemist)
+;; (require 'alchemist)
 (use-package alchemist
   :ensure t)
 
-(require 'elixir-mode)
+;; (require 'elixir-mode)
 (use-package elixir-mode
   :ensure t
 )
 
-(require 'xah-math-input)
+;; (require 'xah-math-input)
 (use-package xah-math-input
   :ensure t
   :config
@@ -237,7 +237,7 @@
 (use-package yaml-mode
   :ensure t)
 
-(require 'tide)
+;; (require 'tide)
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
@@ -259,7 +259,7 @@
 ;;   (add-hook 'typescript-mode-hook 'eglot-ensure)
 ;; )
 
-(require 'format-all)
+;; (require 'format-all)
 (use-package format-all
   :ensure t
   :config
@@ -487,7 +487,7 @@ Version 2017-05-30"
 
 (setq org-cycle-separator-lines 1)
 
-(require 'org-bullets)
+;; (require 'org-bullets)
 (use-package org-bullets
   :ensure t
   :config

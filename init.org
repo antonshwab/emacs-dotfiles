@@ -232,7 +232,7 @@ Nyan mode is essential
 Pass system shell environment to Emacs. This is important primarily for shell inside Emacs, but also things like Org mode export to Tex PDF don't work, since it relies on running external command =pdflatex=, which is loaded from =PATH=.
 
 #+BEGIN_SRC emacs-lisp
-(require 'exec-path-from-shell)
+;; (require 'exec-path-from-shell)
 (use-package exec-path-from-shell
   :ensure t
   ;; :commands exec-path-from-shell-initialize
@@ -244,7 +244,7 @@ Pass system shell environment to Emacs. This is important primarily for shell in
 Expand-region is great, it allows to gradually expand selection inside words, sentences, etc. =C-'= is bound to Org's =cycle through agenda files=, which I don't really use, so I unbind it here before assigning global shortcut for expansion.
 
 #+BEGIN_SRC emacs-lisp
-(require 'expand-region)
+;; (require 'expand-region)
 (use-package expand-region
   :ensure t
   :config
@@ -256,7 +256,7 @@ Expand-region is great, it allows to gradually expand selection inside words, se
 Install Helm and set some keybindings. Note that I use =helm-occur= to search current buffer. (Note: here I =require= helm before using =use-package= to get rid of the warning =functions might not be defined at runtime=.
 
 #+BEGIN_SRC emacs-lisp
-(require 'helm)
+;; (require 'helm)
 (use-package helm
   :ensure t
   :config
@@ -275,7 +275,7 @@ Install Helm and set some keybindings. Note that I use =helm-occur= to search cu
 Install Projectile.
 
 #+BEGIN_SRC emacs-lisp
-(require 'projectile)
+;; (require 'projectile)
 (use-package projectile
   :ensure t
   :config
@@ -287,7 +287,7 @@ Install Projectile.
 And make Helm play nice with Projectile.
 
 #+BEGIN_SRC emacs-lisp
-(require 'helm-projectile)
+;; (require 'helm-projectile)
 (use-package helm-projectile
   :ensure t
   :config
@@ -297,7 +297,7 @@ And make Helm play nice with Projectile.
 Ag is great for fast project-wide searching. Note that =ag-helm= is only an interface. The actual Silversearcher must be installed on the OS level. See [[https://github.com/ggreer/the_silver_searcher][https://github.com/ggreer/the_silver_searcher]].
 
 #+BEGIN_SRC emacs-lisp
-(require 'helm-ag)
+;; (require 'helm-ag)
 (use-package helm-ag
   :ensure t
   :config
@@ -307,7 +307,7 @@ Ag is great for fast project-wide searching. Note that =ag-helm= is only an inte
 I want emacs kill ring and system clipboard to be independent. Simpleclip is the solution to that.
 
 #+BEGIN_SRC emacs-lisp
-(require 'simpleclip)
+;; (require 'simpleclip)
 (use-package simpleclip
   :ensure t
   :commands
@@ -319,7 +319,7 @@ I want emacs kill ring and system clipboard to be independent. Simpleclip is the
 It's time for Magit!
 
 #+BEGIN_SRC emacs-lisp
-(require 'magit)
+;; (require 'magit)
 (use-package magit
   :ensure t
   :config
@@ -329,7 +329,7 @@ It's time for Magit!
 Emacs port of GitGutter
 
 #+BEGIN_SRC emacs-lisp
-(require 'git-gutter)
+;; (require 'git-gutter)
 (use-package git-gutter
   :ensure t
   :config
@@ -358,7 +358,7 @@ Beacon is a light that follows your cursor around so you don't lose it!
 Which key is great for learning Emacs, it shows a nice table of possible commands.
 
 #+BEGIN_SRC emacs-lisp
-(require 'which-key)
+;; (require 'which-key)
 (use-package which-key
   :ensure t
   :config
@@ -375,7 +375,7 @@ Spellchecking requires an external command to be available. Install =aspell= on 
 Company autocompletion
 
 #+BEGIN_SRC emacs-lisp
-(require 'company)
+;; (require 'company)
 (use-package company
   :ensure t
   :config
@@ -398,7 +398,7 @@ Syntax checking
 [[https://www.reddit.com/r/emacs/comments/7mjyz8/flycheck_syntax_checking_makes_editing_files/][Syntax checking will occur only when you save your file or change the major mode.]]
 
 #+BEGIN_SRC emacs-lisp
-(require 'flycheck)
+;; (require 'flycheck)
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
@@ -412,7 +412,7 @@ Syntax checking
 
 Terraform
 #+BEGIN_SRC emacs-lisp
-(require 'terraform-mode)
+;; (require 'terraform-mode)
 (use-package terraform-mode
   :ensure t)
 #+END_SRC
@@ -420,13 +420,13 @@ Terraform
 Elixir
 
 #+BEGIN_SRC emacs-lisp
-(require 'alchemist)
+;; (require 'alchemist)
 (use-package alchemist
   :ensure t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(require 'elixir-mode)
+;; (require 'elixir-mode)
 (use-package elixir-mode
   :ensure t
 )
@@ -435,7 +435,7 @@ Elixir
 Math input
 
 #+BEGIN_SRC emacs-lisp
-(require 'xah-math-input)
+;; (require 'xah-math-input)
 (use-package xah-math-input
   :ensure t
   :config
@@ -455,7 +455,7 @@ Yaml stuff.
 Typescript IDE
 
 #+BEGIN_SRC emacs-lisp
-(require 'tide)
+;; (require 'tide)
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
@@ -486,7 +486,7 @@ Emacs client for LSPs
 Format code after safe
 
 #+BEGIN_SRC emacs-lisp
-(require 'format-all)
+;; (require 'format-all)
 (use-package format-all
   :ensure t
   :config
@@ -837,7 +837,7 @@ I like to put one empty line between headers. By default, Org-mode doesn't show 
 Org-bullets are just nice.
 
 #+BEGIN_SRC emacs-lisp
-(require 'org-bullets)
+;; (require 'org-bullets)
 (use-package org-bullets
   :ensure t
   :config
