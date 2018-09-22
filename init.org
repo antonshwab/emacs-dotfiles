@@ -158,6 +158,7 @@ Show parens and other pairs
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
   :pin melpa-stable
+  :diminish
   :config
   (require 'smartparens-config)
   (smartparens-global-mode t)
@@ -280,9 +281,9 @@ Disable blinking cursor.
 (blink-cursor-mode 0)
 #+END_SRC
 
-Fine-tuning the looks of helm buffers.
++Fine-tuning the looks of helm buffers.+
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
 (custom-set-faces
  '(helm-M-x-key ((t (:foreground "orange2" :underline t :weight semi-bold))))
  '(helm-selection ((t (:background "wheat1" :distant-foreground "black"))))
@@ -351,11 +352,6 @@ Right Alt (option) can be used to enter symbols like em dashes =—=.
 (setq mac-right-option-modifier 'nil)
 #+END_SRC
 
-Esc behaves like =C-g=: it's the "get me out of here" key.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<escape>") (kbd "C-g"))
-#+END_SRC
 
 ** Navigation and editing
 
@@ -379,9 +375,25 @@ Basic things you should expect from macOS.
 (global-set-key (kbd "s-S") 'write-file)              ;; save as
 (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
 
-(global-set-key (kbd "s-z") 'undo)
+;; (global-set-key (kbd "s-z") 'undo)
 #+END_SRC
 
+Undo tree
+
+#+BEGIN_SRC emacs-lisp
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/tmp/undo"))
+          undo-tree-auto-save-history t
+          undo-tree-visualizer-timestamps t
+          undo-tree-visualizer-diff t)))
+
+(global-set-key (kbd "s-z") 'undo-tree-undo)
+(global-set-key (kbd "s-Z") 'undo-tree-redo)
+#+END_SRC
 
 Go back to previous mark (position) within buffer and go back (forward?).
 
@@ -402,6 +414,13 @@ Go back to previous mark (position) within buffer and go back (forward?).
 
 (global-set-key (kbd "s-,") 'my-pop-local-mark-ring)
 (global-set-key (kbd "s-.") 'unpop-to-mark-command)
+#+END_SRC
+
+
+Since =Cmd+,= and =Cmd+.= move you back in forward in the current buffer, the same keys with =Shift= move you back and forward between open buffers.
+ #+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "s-<") 'previous-buffer)
+(global-set-key (kbd "s->") 'next-buffer)
 #+END_SRC
 
 
@@ -484,6 +503,12 @@ Join lines whether you're in a region or not.
 (global-set-key (kbd "s-J") 'join-line)
 #+END_SRC
 
+Upcase word and region using the same keys
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-u") 'upcase-dwim)
+(global-set-key (kbd "M-l") 'downcase-dwim)
+#+END_SRC
+
 Provide nice visual feedback for replace.
 
 #+BEGIN_SRC emacs-lisp
@@ -505,7 +530,7 @@ Multiple cusors are a must. Make <return> insert a newline; multiple-cursors-mod
 (use-package multiple-cursors
   :config
   (global-set-key (kbd "s-d") 'mc/mark-next-like-this)
-  (global-set-key (kbd "M-s-D") 'mc/edit-beginnings-of-lines)
+  (global-set-key (kbd "H-s-d") 'mc/edit-beginnings-of-lines)
   (global-set-key (kbd "s-D") 'mc/mark-all-dwim)
   (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
@@ -547,16 +572,21 @@ I'm still not happy with the way new windows are spawned. For now, at least, let
 (setq split-width-threshold nil)
 #+END_SRC
 
-Move between windows with Control-Command-Arrow.
+Move between windows with Control-Command-Arrow and with =Cmd= just like in iTerm.
 
 #+BEGIN_SRC emacs-lisp
 (use-package windmove
   :config
-  (global-set-key (kbd "<C-s-left>")  'windmove-left)
+  (global-set-key (kbd "<C-s-left>") 'windmove-left)
+  (global-set-key (kbd "s-[")  'windmove-left)
   (global-set-key (kbd "<C-s-right>") 'windmove-right)
+  (global-set-key (kbd "s-]")  'windmove-right)
   (global-set-key (kbd "<C-s-up>")    'windmove-up)
-  (global-set-key (kbd "<C-s-down>")  'windmove-down))
+  (global-set-key (kbd "s-{")  'windmove-up)
+  (global-set-key (kbd "<C-s-down>")  'windmove-down)
+  (global-set-key (kbd "s-}")  'windmove-down))
 #+END_SRC
+
 
 ** Scrolling
 
@@ -581,7 +611,7 @@ Install Projectile
 (require 'projectile)
 (use-package projectile
   :config
-  (define-key projectile-mode-map (kbd "C-s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-P") 'projectile-command-map)
   (projectile-mode +1)
   )
 #+END_SRC
@@ -619,6 +649,7 @@ Install Helm and set some keybindings. Note that I use =helm-swoop= to search cu
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
+  :diminish
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -629,23 +660,36 @@ Install Helm and set some keybindings. Note that I use =helm-swoop= to search cu
       '((swiper . ivy--regex-plus)
         (t      . ivy--regex-fuzzy)))   ;; enable fuzzy searching everywhere except for Swiper
 
-  (global-set-key (kbd "s-b") 'ivy-switch-buffer))
+  (global-set-key (kbd "s-b") 'ivy-switch-buffer)
+  (global-set-key (kbd "H-s-b") 'ivy-resume)
+)
 
 (use-package swiper
   :config
   (global-set-key "\C-s" 'swiper)
+  (global-set-key "\C-r" 'swiper)
   (global-set-key (kbd "s-f") 'swiper))
 
 (use-package counsel
   :pin melpa-stable
   :config
   (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "s-S-p") 'counsel-M-x)
+  (global-set-key (kbd "s-P") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file))
 
 (use-package smex)
 (use-package flx)
+(use-package avy
+  :pin melpa-stable
+)
 #+END_SRC
+
+So if you have a modern machine, I encourage you to add the following:
+
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 20000000)
+#+END_SRC
+
 
 Ivy-rich make Ivy a bit more friendly by adding information to ivy buffers, e.g. description of commands in =M-x=, meta info about buffers in =ivy-switch-buffer=, etc.
 
@@ -683,7 +727,7 @@ Ag is great for fast project-wide searching. Note that =ag-helm= is only an inte
   :config
   (global-set-key (kbd "s-F") 'helm-projectile-ag))
 
-(global-set-key (kbd "s-p") 'helm-projectile-find-file)
+;; (global-set-key (kbd "s-p") 'helm-projectile-find-file)
 #+END_SRC
 
 ** Magit
@@ -707,9 +751,11 @@ It's time for Magit!
         neo-banner-message nil
         neo-show-updir-line nil
         neo-mode-line-type 'neotree
+        neo-mode-line-type 'none
         neo-smart-open t
         neo-show-hidden-files t
         neo-auto-indent-point t)
+   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
    (global-set-key (kbd "s-B") 'neotree-toggle))
 #+END_SRC
 
@@ -760,19 +806,28 @@ Enable right mouse click on macOS to see the list of suggestions.
      (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package flyspell-correct
+  :pin melpa-stable
+)
+(use-package flyspell-correct-popup
+  :pin melpa-stable
+)
+#+END_SRC
+
 Spellcheck current word.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "s-]") 'ispell-word)
-;;(define-key flyspell-mode-map (kbd "s-]") 'flyspell-correct-previous-word-generic)
+(define-key flyspell-mode-map (kbd "s-\\") 'flyspell-correct-previous-word-generic)
 #+END_SRC
+
 
 ** Thesaurus
 
 #+BEGIN_SRC emacs-lisp
 (use-package powerthesaurus
   :config
-  (global-set-key (kbd "s-}") 'powerthesaurus-lookup-word-dwim))
+  (global-set-key (kbd "s-|") 'powerthesaurus-lookup-word-dwim))
 #+END_SRC
 
 
@@ -781,7 +836,6 @@ Spellcheck current word.
 #+BEGIN_SRC emacs-lisp
 (require 'company)
 (use-package company
-  :ensure t
   :config
   (setq company-idle-delay 0.1)
   (setq company-global-modes '(not org-mode))
@@ -809,20 +863,29 @@ Yaml stuff.
 (use-package yaml-mode)
 #+END_SRC
 
-+Emacs port of GitGutter+
+Web mode.
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :mode ("\\.html\\'")
+  :config
+  (setq web-mode-markup-indent-offset 2))
+#+END_SRC
+
+Markdown.
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
+
+Emacs port of GitGutter
 #+BEGIN_SRC emacs-lisp :tangle no
 (use-package git-gutter
+  :diminish
   :config
-  (global-git-gutter-mode +1)
-  (custom-set-variables
-   '(git-gutter:modified-sign " ") ;; two space
-   '(git-gutter:added-sign "+")    ;; multiple character is OK
-   '(git-gutter:deleted-sign "-"))
-
-  (set-face-background 'git-gutter:modified "purple") ;; background color
-  (set-face-foreground 'git-gutter:added "green")
-  (set-face-foreground 'git-gutter:deleted "red")
-  )
+  (global-git-gutter-mode 't)
+  (set-face-background 'git-gutter:modified 'nil) ;; background color
+  (set-face-foreground 'git-gutter:added "green4")
+  (set-face-foreground 'git-gutter:deleted "red")))
 #+END_SRC
 
 JSON mode https://github.com/joshwnj/json-mode
@@ -1133,7 +1196,7 @@ Quickly open todo and config files with Esc-Esc-letter.
 Org capture.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "s-.") 'org-capture)
+(global-set-key (kbd "C-c c") 'org-capture)
 #+END_SRC
 
 I like to put one empty line between headers. By default, Org-mode doesn't show those lines when collapsing.
@@ -1146,14 +1209,4 @@ Add closed date when todo goes to DONE state.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-log-done 'time)
-#+END_SRC
-
-+Org-bullets are just nice.+
-
-#+BEGIN_SRC emacs-lisp :tangle no
-;; (require 'org-bullets)
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
